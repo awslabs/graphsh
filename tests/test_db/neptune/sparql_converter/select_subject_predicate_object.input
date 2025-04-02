@@ -1,0 +1,31 @@
+[
+  {
+    "s": {
+      "type": "uri",
+      "value": "http://example.org/person/1"
+    },
+    "p": {
+      "type": "uri",
+      "value": "http://example.org/ontology/name"
+    },
+    "o": {
+      "type": "literal",
+      "value": "John Doe"
+    }
+  },
+  {
+    "s": {
+      "type": "uri",
+      "value": "http://example.org/person/1"
+    },
+    "p": {
+      "type": "uri",
+      "value": "http://example.org/ontology/age"
+    },
+    "o": {
+      "type": "literal",
+      "value": "30",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+    }
+  }
+]

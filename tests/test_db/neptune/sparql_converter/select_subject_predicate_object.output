@@ -1,0 +1,12 @@
+[
+  {
+    "s": "http://example.org/person/1",
+    "p": "http://example.org/ontology/name",
+    "o": "John Doe"
+  },
+  {
+    "s": "http://example.org/person/1",
+    "p": "http://example.org/ontology/age",
+    "o": 30
+  }
+]

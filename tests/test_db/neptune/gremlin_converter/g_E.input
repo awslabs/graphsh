@@ -1,0 +1,144 @@
+{
+  "requestId": "91bbe2c3-791d-4393-a273-a57edf4d20a7",
+  "status": {
+    "message": "",
+    "code": 200,
+    "attributes": {
+      "@type": "g:Map",
+      "@value": []
+    }
+  },
+  "result": {
+    "data": {
+      "@type": "g:List",
+      "@value": [
+        {
+          "@type": "g:Edge",
+          "@value": {
+            "id": "9d90372c-0c35-43a9-ae36-acc229fff207",
+            "label": "ACTED_IN",
+            "inVLabel": "Movie",
+            "outVLabel": "Person::Actor",
+            "inV": "d6a5485c-4087-479b-bda7-dab1b595afee",
+            "outV": "7f70eac7-109e-4512-9f7b-30e6186c4720",
+            "properties": {
+              "role": {
+                "@type": "g:Property",
+                "@value": {
+                  "key": "role",
+                  "value": "Gordon Gekko"
+                }
+              }
+            }
+          }
+        },
+        {
+          "@type": "g:Edge",
+          "@value": {
+            "id": "4565add5-5fe4-4d83-a97d-4a83b531a0c7",
+            "label": "ACTED_IN",
+            "inVLabel": "Movie",
+            "outVLabel": "Person::Actor",
+            "inV": "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+            "outV": "8dcb94ec-0051-485b-870e-8261a39c9db2",
+            "properties": {
+              "role": {
+                "@type": "g:Property",
+                "@value": {
+                  "key": "role",
+                  "value": "A.J. MacInerney"
+                }
+              }
+            }
+          }
+        },
+        {
+          "@type": "g:Edge",
+          "@value": {
+            "id": "30ead4a0-0438-4ec7-9970-1a4d21f8b8c2",
+            "label": "ACTED_IN",
+            "inVLabel": "Movie",
+            "outVLabel": "Person::Actor",
+            "inV": "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+            "outV": "7f70eac7-109e-4512-9f7b-30e6186c4720",
+            "properties": {
+              "role": {
+                "@type": "g:Property",
+                "@value": {
+                  "key": "role",
+                  "value": "President Andrew Shepherd"
+                }
+              }
+            }
+          }
+        },
+        {
+          "@type": "g:Edge",
+          "@value": {
+            "id": "733fc4c1-d143-4e59-991d-441120d31233",
+            "label": "DIRECTED",
+            "inVLabel": "Movie",
+            "outVLabel": "Person::Director",
+            "inV": "d6a5485c-4087-479b-bda7-dab1b595afee",
+            "outV": "54c8519d-0571-4440-a28f-abcfc9e67b12"
+          }
+        },
+        {
+          "@type": "g:Edge",
+          "@value": {
+            "id": "0a02c042-1489-4c8c-abf6-61e5bedf762c",
+            "label": "DIRECTED",
+            "inVLabel": "Movie",
+            "outVLabel": "Person::Director",
+            "inV": "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+            "outV": "78025c19-fe27-4cfe-b911-943bffe711f1"
+          }
+        },
+        {
+          "@type": "g:Edge",
+          "@value": {
+            "id": "e349b832-12d1-4d5b-8e30-769197e59312",
+            "label": "ACTED_IN",
+            "inVLabel": "Movie",
+            "outVLabel": "Person::Actor",
+            "inV": "d6a5485c-4087-479b-bda7-dab1b595afee",
+            "outV": "9dbef6a7-6001-4143-9e37-aeee0cb709ce",
+            "properties": {
+              "role": {
+                "@type": "g:Property",
+                "@value": {
+                  "key": "role",
+                  "value": "Bud Fox"
+                }
+              }
+            }
+          }
+        },
+        {
+          "@type": "g:Edge",
+          "@value": {
+            "id": "aebed0fe-b22b-47b1-b947-666a42f80840",
+            "label": "ACTED_IN",
+            "inVLabel": "Movie",
+            "outVLabel": "Person::Actor",
+            "inV": "d6a5485c-4087-479b-bda7-dab1b595afee",
+            "outV": "8dcb94ec-0051-485b-870e-8261a39c9db2",
+            "properties": {
+              "role": {
+                "@type": "g:Property",
+                "@value": {
+                  "key": "role",
+                  "value": "Carl Fox"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "meta": {
+      "@type": "g:Map",
+      "@value": []
+    }
+  }
+}

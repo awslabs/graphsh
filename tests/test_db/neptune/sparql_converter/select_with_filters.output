@@ -1,0 +1,12 @@
+[
+  {
+    "person": "http://example.org/person/1",
+    "name": "John Doe",
+    "age": 30
+  },
+  {
+    "person": "http://example.org/person/2",
+    "name": "Jane Smith",
+    "age": 25
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "s": {
+      "type": "uri",
+      "value": "http://example.org/person/1"
+    }
+  },
+  {
+    "s": {
+      "type": "uri",
+      "value": "http://example.org/person/2"
+    }
+  },
+  {
+    "s": {
+      "type": "uri",
+      "value": "http://example.org/person/3"
+    }
+  }
+]

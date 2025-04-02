@@ -1,0 +1,99 @@
+{
+  "requestId": "1d708693-b5d3-413c-bb0c-0f568f28ab90",
+  "status": {
+    "message": "",
+    "code": 200,
+    "attributes": {
+      "@type": "g:Map",
+      "@value": []
+    }
+  },
+  "result": {
+    "data": {
+      "@type": "g:List",
+      "@value": [
+        {
+          "@type": "g:VertexProperty",
+          "@value": {
+            "id": {
+              "@type": "g:Int32",
+              "@value": 729211471
+            },
+            "value": "Wall Street",
+            "label": "title"
+          }
+        },
+        {
+          "@type": "g:VertexProperty",
+          "@value": {
+            "id": {
+              "@type": "g:Int32",
+              "@value": -1393936753
+            },
+            "value": "The American President",
+            "label": "title"
+          }
+        },
+        {
+          "@type": "g:VertexProperty",
+          "@value": {
+            "id": {
+              "@type": "g:Int32",
+              "@value": -2059058661
+            },
+            "value": "Charlie Sheen",
+            "label": "name"
+          }
+        },
+        {
+          "@type": "g:VertexProperty",
+          "@value": {
+            "id": {
+              "@type": "g:Int32",
+              "@value": -1599641081
+            },
+            "value": "Martin Sheen",
+            "label": "name"
+          }
+        },
+        {
+          "@type": "g:VertexProperty",
+          "@value": {
+            "id": {
+              "@type": "g:Int32",
+              "@value": -1016286436
+            },
+            "value": "Michael Douglas",
+            "label": "name"
+          }
+        },
+        {
+          "@type": "g:VertexProperty",
+          "@value": {
+            "id": {
+              "@type": "g:Int32",
+              "@value": 1324026302
+            },
+            "value": "Oliver Stone",
+            "label": "name"
+          }
+        },
+        {
+          "@type": "g:VertexProperty",
+          "@value": {
+            "id": {
+              "@type": "g:Int32",
+              "@value": -211739043
+            },
+            "value": "Rob Reiner",
+            "label": "name"
+          }
+        }
+      ]
+    },
+    "meta": {
+      "@type": "g:Map",
+      "@value": []
+    }
+  }
+}

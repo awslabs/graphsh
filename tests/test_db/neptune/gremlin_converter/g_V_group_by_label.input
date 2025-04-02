@@ -1,0 +1,193 @@
+{
+  "requestId": "6750979a-6ef5-4e53-8e5f-c15a4cde510f",
+  "status": {
+    "message": "",
+    "code": 200,
+    "attributes": {
+      "@type": "g:Map",
+      "@value": []
+    }
+  },
+  "result": {
+    "data": {
+      "@type": "g:List",
+      "@value": [
+        {
+          "@type": "g:Map",
+          "@value": [
+            "Movie",
+            {
+              "@type": "g:List",
+              "@value": [
+                {
+                  "@type": "g:Vertex",
+                  "@value": {
+                    "id": "d6a5485c-4087-479b-bda7-dab1b595afee",
+                    "label": "Movie",
+                    "properties": {
+                      "title": [
+                        {
+                          "@type": "g:VertexProperty",
+                          "@value": {
+                            "id": {
+                              "@type": "g:Int32",
+                              "@value": 729211471
+                            },
+                            "value": "Wall Street",
+                            "label": "title"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "@type": "g:Vertex",
+                  "@value": {
+                    "id": "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+                    "label": "Movie",
+                    "properties": {
+                      "title": [
+                        {
+                          "@type": "g:VertexProperty",
+                          "@value": {
+                            "id": {
+                              "@type": "g:Int32",
+                              "@value": -1393936753
+                            },
+                            "value": "The American President",
+                            "label": "title"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "Person",
+            {
+              "@type": "g:List",
+              "@value": [
+                {
+                  "@type": "g:Vertex",
+                  "@value": {
+                    "id": "9dbef6a7-6001-4143-9e37-aeee0cb709ce",
+                    "label": "Person::Actor",
+                    "properties": {
+                      "name": [
+                        {
+                          "@type": "g:VertexProperty",
+                          "@value": {
+                            "id": {
+                              "@type": "g:Int32",
+                              "@value": -2059058661
+                            },
+                            "value": "Charlie Sheen",
+                            "label": "name"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "@type": "g:Vertex",
+                  "@value": {
+                    "id": "8dcb94ec-0051-485b-870e-8261a39c9db2",
+                    "label": "Person::Actor",
+                    "properties": {
+                      "name": [
+                        {
+                          "@type": "g:VertexProperty",
+                          "@value": {
+                            "id": {
+                              "@type": "g:Int32",
+                              "@value": -1599641081
+                            },
+                            "value": "Martin Sheen",
+                            "label": "name"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "@type": "g:Vertex",
+                  "@value": {
+                    "id": "7f70eac7-109e-4512-9f7b-30e6186c4720",
+                    "label": "Person::Actor",
+                    "properties": {
+                      "name": [
+                        {
+                          "@type": "g:VertexProperty",
+                          "@value": {
+                            "id": {
+                              "@type": "g:Int32",
+                              "@value": -1016286436
+                            },
+                            "value": "Michael Douglas",
+                            "label": "name"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "@type": "g:Vertex",
+                  "@value": {
+                    "id": "54c8519d-0571-4440-a28f-abcfc9e67b12",
+                    "label": "Person::Director",
+                    "properties": {
+                      "name": [
+                        {
+                          "@type": "g:VertexProperty",
+                          "@value": {
+                            "id": {
+                              "@type": "g:Int32",
+                              "@value": 1324026302
+                            },
+                            "value": "Oliver Stone",
+                            "label": "name"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "@type": "g:Vertex",
+                  "@value": {
+                    "id": "78025c19-fe27-4cfe-b911-943bffe711f1",
+                    "label": "Person::Director",
+                    "properties": {
+                      "name": [
+                        {
+                          "@type": "g:VertexProperty",
+                          "@value": {
+                            "id": {
+                              "@type": "g:Int32",
+                              "@value": -211739043
+                            },
+                            "value": "Rob Reiner",
+                            "label": "name"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "meta": {
+      "@type": "g:Map",
+      "@value": []
+    }
+  }
+}

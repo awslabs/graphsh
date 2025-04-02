@@ -1,0 +1,22 @@
+[
+  {
+    "name": {
+      "type": "literal",
+      "value": "John Doe"
+    },
+    "email": {
+      "type": "literal",
+      "value": "john@example.com"
+    }
+  },
+  {
+    "name": {
+      "type": "literal",
+      "value": "Jane Smith"
+    },
+    "email": {
+      "type": "literal",
+      "value": "jane@example.com"
+    }
+  }
+]

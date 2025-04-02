@@ -1,0 +1,32 @@
+[
+  {
+    "person": {
+      "type": "uri",
+      "value": "http://example.org/person/1"
+    },
+    "name": {
+      "type": "literal",
+      "value": "John Doe"
+    },
+    "age": {
+      "type": "literal",
+      "value": "30",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+    }
+  },
+  {
+    "person": {
+      "type": "uri",
+      "value": "http://example.org/person/2"
+    },
+    "name": {
+      "type": "literal",
+      "value": "Jane Smith"
+    },
+    "age": {
+      "type": "literal",
+      "value": "25",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+    }
+  }
+]

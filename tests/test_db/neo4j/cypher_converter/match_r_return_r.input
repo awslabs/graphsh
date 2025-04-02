@@ -1,0 +1,37 @@
+{
+  "results": [
+    {
+      "r": {
+        "identity": "4",
+        "start": "0",
+        "end": "7",
+        "type": "ACTED_IN",
+        "properties": {
+          "role": "Bud Fox"
+        }
+      }
+    },
+    {
+      "r": {
+        "identity": "10",
+        "start": "1",
+        "end": "13",
+        "type": "ACTED_IN",
+        "properties": {
+          "role": "A.J. MacInerney"
+        }
+      }
+    },
+    {
+      "r": {
+        "identity": "7",
+        "start": "4",
+        "end": "13",
+        "type": "ACTED_IN",
+        "properties": {
+          "role": "President Andrew Shepherd"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+    "requestId": "6750979a-6ef5-4e53-8e5f-c15a4cde510f",
+    "result": {
+        "data": [
+            {
+                "Movie": [
+                    {
+                        "id": "d6a5485c-4087-479b-bda7-dab1b595afee",
+                        "labels": [
+                            "Movie"
+                        ],
+                        "properties": {
+                            "title": "Wall Street"
+                        }
+                    },
+                    {
+                        "id": "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+                        "labels": [
+                            "Movie"
+                        ],
+                        "properties": {
+                            "title": "The American President"
+                        }
+                    }
+                ],
+                "Person": [
+                    {
+                        "id": "9dbef6a7-6001-4143-9e37-aeee0cb709ce",
+                        "labels": [
+                            "Person",
+                            "Actor"
+                        ],
+                        "properties": {
+                            "name": "Charlie Sheen"
+                        }
+                    },
+                    {
+                        "id": "8dcb94ec-0051-485b-870e-8261a39c9db2",
+                        "labels": [
+                            "Person",
+                            "Actor"
+                        ],
+                        "properties": {
+                            "name": "Martin Sheen"
+                        }
+                    },
+                    {
+                        "id": "7f70eac7-109e-4512-9f7b-30e6186c4720",
+                        "labels": [
+                            "Person",
+                            "Actor"
+                        ],
+                        "properties": {
+                            "name": "Michael Douglas"
+                        }
+                    },
+                    {
+                        "id": "54c8519d-0571-4440-a28f-abcfc9e67b12",
+                        "labels": [
+                            "Person",
+                            "Director"
+                        ],
+                        "properties": {
+                            "name": "Oliver Stone"
+                        }
+                    },
+                    {
+                        "id": "78025c19-fe27-4cfe-b911-943bffe711f1",
+                        "labels": [
+                            "Person",
+                            "Director"
+                        ],
+                        "properties": {
+                            "name": "Rob Reiner"
+                        }
+                    }
+                ]
+            }
+        ],
+        "meta": {}
+    },
+    "status": {
+        "attributes": {},
+        "code": 200,
+        "message": ""
+    }
+}

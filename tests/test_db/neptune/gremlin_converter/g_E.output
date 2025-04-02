@@ -1,0 +1,128 @@
+{
+  "requestId": "91bbe2c3-791d-4393-a273-a57edf4d20a7",
+  "status": {
+    "message": "",
+    "code": 200,
+    "attributes": {}
+  },
+  "result": {
+    "data": [
+      {
+        "id": "9d90372c-0c35-43a9-ae36-acc229fff207",
+        "type": "ACTED_IN", 
+        "source": {
+          "id": "7f70eac7-109e-4512-9f7b-30e6186c4720",
+          "labels": ["Person", "Actor"],
+          "properties": {}
+        },
+        "target": {
+          "id": "d6a5485c-4087-479b-bda7-dab1b595afee",
+          "labels": ["Movie"],
+          "properties": {}
+        },
+        "properties": {
+          "role": "Gordon Gekko"
+        }
+      },
+      {
+        "id": "4565add5-5fe4-4d83-a97d-4a83b531a0c7",
+        "type": "ACTED_IN",
+        "source": {
+          "id": "8dcb94ec-0051-485b-870e-8261a39c9db2",
+          "labels": ["Person", "Actor"],
+          "properties": {}
+        },
+        "target": {
+          "id": "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+          "labels": ["Movie"],
+          "properties": {}
+        },
+        "properties": {
+          "role": "A.J. MacInerney"
+        }
+      },
+      {
+        "id": "30ead4a0-0438-4ec7-9970-1a4d21f8b8c2",
+        "type": "ACTED_IN",
+        "source": {
+          "id": "7f70eac7-109e-4512-9f7b-30e6186c4720",
+          "labels": ["Person", "Actor"],
+          "properties": {}
+        },
+        "target": {
+          "id": "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+          "labels": ["Movie"],
+          "properties": {}
+        },
+        "properties": {
+          "role": "President Andrew Shepherd"
+        }
+      },
+      {
+        "id": "733fc4c1-d143-4e59-991d-441120d31233",
+        "type": "DIRECTED",
+        "source": {
+          "id": "54c8519d-0571-4440-a28f-abcfc9e67b12",
+          "labels": ["Person", "Director"],
+          "properties": {}
+        },
+        "target": {
+          "id": "d6a5485c-4087-479b-bda7-dab1b595afee",
+          "labels": ["Movie"],
+          "properties": {}
+        },
+        "properties": {}
+      },
+      {
+        "id": "0a02c042-1489-4c8c-abf6-61e5bedf762c",
+        "type": "DIRECTED",
+        "source": {
+          "id": "78025c19-fe27-4cfe-b911-943bffe711f1",
+          "labels": ["Person", "Director"],
+          "properties": {}
+        },
+        "target": {
+          "id": "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+          "labels": ["Movie"],
+          "properties": {}
+        },
+        "properties": {}
+      },
+      {
+        "id": "e349b832-12d1-4d5b-8e30-769197e59312",
+        "type": "ACTED_IN",
+        "source": {
+          "id": "9dbef6a7-6001-4143-9e37-aeee0cb709ce",
+          "labels": ["Person", "Actor"],
+          "properties": {}
+        },
+        "target": {
+          "id": "d6a5485c-4087-479b-bda7-dab1b595afee",
+          "labels": ["Movie"],
+          "properties": {}
+        },
+        "properties": {
+          "role": "Bud Fox"
+        }
+      },
+      {
+        "id": "aebed0fe-b22b-47b1-b947-666a42f80840",
+        "type": "ACTED_IN",
+        "source": {
+          "id": "8dcb94ec-0051-485b-870e-8261a39c9db2",
+          "labels": ["Person", "Actor"],
+          "properties": {}
+        },
+        "target": {
+          "id": "d6a5485c-4087-479b-bda7-dab1b595afee",
+          "labels": ["Movie"],
+          "properties": {}
+        },
+        "properties": {
+          "role": "Carl Fox"
+        }
+      }
+    ],
+    "meta": {}
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "requestId": "dde0397a-4fbd-4543-8883-662a28b0e2db",
+  "status": {
+    "message": "",
+    "code": 200,
+    "attributes": {
+      "@type": "g:Map",
+      "@value": []
+    }
+  },
+  "result": {
+    "data": {
+      "@type": "g:List",
+      "@value": [
+        {
+          "@type": "g:Map",
+          "@value": [
+            {
+              "@type": "g:T",
+              "@value": "id"
+            },
+            "9dbef6a7-6001-4143-9e37-aeee0cb709ce",
+            {
+              "@type": "g:T",
+              "@value": "label"
+            },
+            "Person::Actor",
+            "name",
+            "Charlie Sheen"
+          ]
+        },
+        {
+          "@type": "g:Map",
+          "@value": [
+            {
+              "@type": "g:T",
+              "@value": "id"
+            },
+            "8dcb94ec-0051-485b-870e-8261a39c9db2",
+            {
+              "@type": "g:T",
+              "@value": "label"
+            },
+            "Person::Actor",
+            "name",
+            "Martin Sheen"
+          ]
+        },
+        {
+          "@type": "g:Map",
+          "@value": [
+            {
+              "@type": "g:T",
+              "@value": "id"
+            },
+            "7f70eac7-109e-4512-9f7b-30e6186c4720",
+            {
+              "@type": "g:T",
+              "@value": "label"
+            },
+            "Person::Actor",
+            "name",
+            "Michael Douglas"
+          ]
+        },
+        {
+          "@type": "g:Map",
+          "@value": [
+            {
+              "@type": "g:T",
+              "@value": "id"
+            },
+            "54c8519d-0571-4440-a28f-abcfc9e67b12",
+            {
+              "@type": "g:T",
+              "@value": "label"
+            },
+            "Person::Director",
+            "name",
+            "Oliver Stone"
+          ]
+        },
+        {
+          "@type": "g:Map",
+          "@value": [
+            {
+              "@type": "g:T",
+              "@value": "id"
+            },
+            "78025c19-fe27-4cfe-b911-943bffe711f1",
+            {
+              "@type": "g:T",
+              "@value": "label"
+            },
+            "Person::Director",
+            "name",
+            "Rob Reiner"
+          ]
+        },
+        {
+          "@type": "g:Map",
+          "@value": [
+            {
+              "@type": "g:T",
+              "@value": "id"
+            },
+            "d6a5485c-4087-479b-bda7-dab1b595afee",
+            {
+              "@type": "g:T",
+              "@value": "label"
+            },
+            "Movie",
+            "title",
+            "Wall Street"
+          ]
+        },
+        {
+          "@type": "g:Map",
+          "@value": [
+            {
+              "@type": "g:T",
+              "@value": "id"
+            },
+            "4ab49d22-477e-456a-b64b-ec83c83de7f9",
+            {
+              "@type": "g:T",
+              "@value": "label"
+            },
+            "Movie",
+            "title",
+            "The American President"
+          ]
+        }
+      ]
+    },
+    "meta": {
+      "@type": "g:Map",
+      "@value": []
+    }
+  }
+}

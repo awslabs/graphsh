@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "labels(n)": [
+        "Actor",
+        "Person"
+      ]
+    },
+    {
+      "labels(n)": [
+        "Actor",
+        "Person"
+      ]
+    },
+    {
+      "labels(n)": [
+        "Actor",
+        "Person"
+      ]
+    },
+    {
+      "labels(n)": [
+        "Director",
+        "Person"
+      ]
+    },
+    {
+      "labels(n)": [
+        "Director",
+        "Person"
+      ]
+    }
+  ]
+}

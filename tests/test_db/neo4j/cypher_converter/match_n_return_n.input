@@ -1,0 +1,67 @@
+{
+  "results": [
+    {
+      "n": {
+        "identity": "0",
+        "labels": ["Actor", "Person"],
+        "properties": {
+          "name": "Charlie Sheen"
+        }
+      }
+    },
+    {
+      "n": {
+        "identity": "1",
+        "labels": ["Actor", "Person"],
+        "properties": {
+          "name": "Martin Sheen"
+        }
+      }
+    },
+    {
+      "n": {
+        "identity": "4",
+        "labels": ["Actor", "Person"],
+        "properties": {
+          "name": "Michael Douglas"
+        }
+      }
+    },
+    {
+      "n": {
+        "identity": "5",
+        "labels": ["Director", "Person"],
+        "properties": {
+          "name": "Oliver Stone"
+        }
+      }
+    },
+    {
+      "n": {
+        "identity": "6",
+        "labels": ["Director", "Person"],
+        "properties": {
+          "name": "Rob Reiner"
+        }
+      }
+    },
+    {
+      "n": {
+        "identity": "7",
+        "labels": ["Movie"],
+        "properties": {
+          "title": "Wall Street"
+        }
+      }
+    },
+    {
+      "n": {
+        "identity": "13",
+        "labels": ["Movie"],
+        "properties": {
+          "title": "The American President"
+        }
+      }
+    }
+  ]
+}

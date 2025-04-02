@@ -1,0 +1,12 @@
+{
+  "requestId": "33408cd6-95cd-4445-acff-0012bb313a87",
+  "status": {
+    "message": "",
+    "code": 200,
+    "attributes": {}
+  },
+  "result": {
+    "data": [7],
+    "meta": {}
+  }
+}

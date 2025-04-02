@@ -1,0 +1,23 @@
+[
+  {
+    "name": {
+      "type": "literal",
+      "value": "John Doe"
+    },
+    "age": {
+      "type": "literal",
+      "value": "30",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "height": {
+      "type": "literal",
+      "value": "1.85",
+      "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+    },
+    "active": {
+      "type": "literal",
+      "value": "true",
+      "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+    }
+  }
+]

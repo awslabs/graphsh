@@ -1,0 +1,11 @@
+[
+  {
+    "s": "http://example.org/person/1"
+  },
+  {
+    "s": "http://example.org/person/2"
+  },
+  {
+    "s": "http://example.org/person/3"
+  }
+]

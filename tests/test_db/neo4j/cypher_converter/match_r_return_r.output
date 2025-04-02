@@ -1,0 +1,61 @@
+{
+  "results": [
+    {
+      "r": {
+        "id": "4",
+        "source": {
+          "id": "0",
+          "labels": [],
+          "properties": {}
+        },
+        "target": {
+          "id": "7",
+          "labels": [],
+          "properties": {}
+        },
+        "type": "ACTED_IN",
+        "properties": {
+          "role": "Bud Fox"
+        }
+      }
+    },
+    {
+      "r": {
+        "id": "10",
+        "source": {
+          "id": "1",
+          "labels": [],
+          "properties": {}
+        },
+        "target": {
+          "id": "13",
+          "labels": [],
+          "properties": {}
+        },
+        "type": "ACTED_IN",
+        "properties": {
+          "role": "A.J. MacInerney"
+        }
+      }
+    },
+    {
+      "r": {
+        "id": "7",
+        "source": {
+          "id": "4",
+          "labels": [],
+          "properties": {}
+        },
+        "target": {
+          "id": "13",
+          "labels": [],
+          "properties": {}
+        },
+        "type": "ACTED_IN",
+        "properties": {
+          "role": "President Andrew Shepherd"
+        }
+      }
+    }
+  ]
+}
