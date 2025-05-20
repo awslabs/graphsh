@@ -3,12 +3,11 @@ TinkerPop Gremlin Server adapter for GraphSh.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional
 
 from gremlin_python.driver.client import Client
 from gremlin_python.driver.driver_remote_connection import DriverRemoteConnection
 from gremlin_python.process.anonymous_traversal import traversal
-from gremlin_python.process.graph_traversal import __
 
 from graphsh.db.adapters.base import DatabaseAdapter
 from graphsh.db.converters.tinkerpop import TinkerpopGremlinConverter

@@ -5,7 +5,7 @@ Logging functionality for GraphSh.
 import os
 import logging
 from datetime import datetime
-from typing import Optional, Any
+from typing import Any
 
 # Singleton instance
 _logger_instance = None

@@ -2,8 +2,6 @@
 Tests for command registry and commands.
 """
 
-import os
-import tempfile
 from unittest.mock import MagicMock, patch, call
 
 import pytest
@@ -35,6 +33,7 @@ def test_cmd_help_no_args(command_registry):
             command_registry.cmd_help([])
             mock_table.assert_called_once()
             mock_print.assert_called()
+
 
 def test_cmd_quit(command_registry):
     """Test quit command."""

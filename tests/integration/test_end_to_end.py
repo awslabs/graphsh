@@ -2,8 +2,6 @@
 End-to-end integration tests for GraphSh.
 """
 
-import os
-import tempfile
 from unittest.mock import MagicMock, patch
 
 import pytest

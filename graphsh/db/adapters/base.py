@@ -3,7 +3,7 @@ Base database adapter for GraphSh.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
 from urllib.parse import urlparse
 
 

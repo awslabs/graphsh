@@ -22,10 +22,7 @@ def mock_boto3_session():
 
 def test_init_with_cluster_id():
     """Test initialization with cluster ID."""
-    adapter = NeptuneAnalyticsAdapter(
-        graph_id="my-graph-id",
-        region="us-west-2"
-    )
+    adapter = NeptuneAnalyticsAdapter(graph_id="my-graph-id", region="us-west-2")
     assert adapter.graph_id == "my-graph-id"
     assert adapter.region == "us-west-2"
 

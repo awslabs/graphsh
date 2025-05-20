@@ -3,7 +3,7 @@ Neo4j database adapter for GraphSh.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional
 
 from neo4j import GraphDatabase
 from neo4j.exceptions import ServiceUnavailable, AuthError
@@ -82,7 +82,7 @@ class Neo4jAdapter(DatabaseAdapter):
                 "region",
                 "ssl",
                 "profile",
-                "type"
+                "type",
             ]:
                 driver_options[key] = value
 

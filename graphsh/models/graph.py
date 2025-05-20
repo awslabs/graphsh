@@ -5,7 +5,7 @@ This module defines the core data models used to represent graph elements
 (nodes, edges, paths, etc.) in a database-agnostic way.
 """
 
-from typing import Any, Dict, List, Optional, Set, Union
+from typing import Any, Dict, List, Optional
 
 
 class GraphNode:

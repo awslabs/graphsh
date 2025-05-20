@@ -5,16 +5,12 @@ Special commands for GraphSh interactive shell.
 import logging
 import os
 import sys
-import time
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Callable, Dict, List, Tuple
 
 from rich.console import Console
 from rich.table import Table
-from rich.panel import Panel
-from rich.markup import escape
 
 from graphsh.renderers import get_renderer
-from graphsh.cli.logger import get_logger
 from graphsh.config.preferences import UserPreferences, DEFAULT_PREFERENCES
 from graphsh.config.profiles import ConnectionProfiles
 from graphsh.lang import get_language_processor

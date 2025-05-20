@@ -3,7 +3,6 @@ Factory for creating database adapters.
 """
 
 import logging
-from graphsh.db.adapters.base import DatabaseAdapter
 
 logger = logging.getLogger(__name__)
 

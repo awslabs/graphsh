@@ -2,9 +2,8 @@
 Base renderer for GraphSh.
 """
 
-from typing import Dict, Any, List, Optional, Union
+from typing import Dict, Any, List
 from rich.console import Console
-import io
 
 console = Console()
 

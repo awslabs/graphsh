@@ -3,7 +3,6 @@ Integration tests for renderers.
 """
 
 import pytest
-from unittest.mock import patch
 
 from graphsh.renderers import (
     get_renderer,

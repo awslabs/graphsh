@@ -5,7 +5,7 @@ Amazon Neptune adapter for GraphSh.
 import json
 import logging
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 from urllib.parse import urlparse
 
 import boto3
@@ -13,7 +13,6 @@ import botocore.auth
 import botocore.awsrequest
 import requests
 
-import rdflib
 from rdflib.plugins.sparql.parser import parseUpdate
 
 from graphsh.db.adapters.base import DatabaseAdapter
@@ -91,7 +90,12 @@ class NeptuneAdapter(DatabaseAdapter):
                 )
 
                 # Retrieve endpoint from response
-                self.endpoint = "https://" + response["DBClusters"][0]["Endpoint"] + ":" + str(response["DBClusters"][0]["Port"])
+                self.endpoint = (
+                    "https://"
+                    + response["DBClusters"][0]["Endpoint"]
+                    + ":"
+                    + str(response["DBClusters"][0]["Port"])
+                )
 
         # Parse endpoint string
         self.protocol, self.host, self.port, self.use_ssl = self.parse_endpoint(
@@ -281,7 +285,7 @@ class NeptuneAdapter(DatabaseAdapter):
             try:
                 parseUpdate(query)
                 data = {"update": query}
-            except Exception as e:
+            except Exception:
                 data = {"query": query}
 
             response = self.http_session.post(
@@ -386,7 +390,6 @@ class NeptuneAdapter(DatabaseAdapter):
             requests.PreparedRequest: Signed request.
         """
         # Parse URL to get service and host
-        from urllib.parse import urlparse
 
         url = urlparse(request.url)
         service = "neptune-db"

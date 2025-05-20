@@ -3,11 +3,8 @@ Fixtures for integration tests.
 """
 
 import os
-import time
 import pytest
 import socket
-import sys
-import ssl
 from graphsh.cli.app import GraphShApp
 
 

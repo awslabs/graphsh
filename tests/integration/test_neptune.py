@@ -5,11 +5,9 @@ These tests require a running Gremlin Server instance.
 """
 
 import pytest
-import json
 import re
 from io import StringIO
 import sys
-from graphsh.cli.app import GraphShApp
 
 
 def capture_stdout(func, *args, **kwargs):

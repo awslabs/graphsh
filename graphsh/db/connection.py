@@ -2,9 +2,8 @@
 Database connection module for GraphSh.
 """
 
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List
 import logging
-import re
 from graphsh.db.adapters import get_adapter
 
 logger = logging.getLogger(__name__)

@@ -4,8 +4,6 @@ REPL (Read-Eval-Print Loop) for GraphSh.
 
 import os
 import logging
-import sys
-from typing import Optional, List, Dict, Any
 
 from rich.console import Console
 from prompt_toolkit import PromptSession
@@ -173,26 +171,3 @@ class GraphShCompleter(Completer):
                 if command.startswith(word_before_cursor):
                     yield Completion(command, start_position=-len(word_before_cursor))
             return
-
-        # Handle language-specific completions
-        try:
-            # Get suggestions from the language processor
-            suggestions = self.app.language_processor.get_completion_suggestions(
-                text, cursor_position
-            )
-
-            # Get the current word being typed
-            word_before_cursor = document.get_word_before_cursor()
-
-            # Provide completions
-            for suggestion in suggestions:
-                if suggestion.lower().startswith(word_before_cursor.lower()):
-                    yield Completion(
-                        suggestion, start_position=-len(word_before_cursor)
-                    )
-                else:
-                    yield Completion(suggestion)
-        except Exception as e:
-            # If there's an error in completion, just don't provide completions
-            logger.error("Error with completion", e)
-            pass

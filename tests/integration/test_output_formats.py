@@ -5,12 +5,8 @@ These tests verify that output format switching works correctly and that
 results are properly formatted in each output format.
 """
 
-import pytest
-import json
-import re
 from io import StringIO
 import sys
-from graphsh.cli.app import GraphShApp
 
 
 def capture_stdout(func, *args, **kwargs):

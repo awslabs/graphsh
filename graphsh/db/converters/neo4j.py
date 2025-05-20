@@ -4,10 +4,10 @@ Converters for Neo4j data formats.
 This module provides converters for Neo4j's Cypher result formats to GraphSh models.
 """
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List
 
 from graphsh.db.converters.base import BaseConverter
-from graphsh.models.graph import GraphEdge, GraphNode, GraphPath, GraphValue
+from graphsh.models.graph import GraphEdge, GraphNode
 
 
 class Neo4jCypherConverter(BaseConverter):

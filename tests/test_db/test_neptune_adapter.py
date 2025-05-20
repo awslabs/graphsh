@@ -2,7 +2,6 @@
 Unit tests for Neptune adapter.
 """
 
-import json
 import pytest
 from unittest.mock import MagicMock, patch
 

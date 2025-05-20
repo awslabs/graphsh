@@ -7,8 +7,7 @@ This adapter uses boto3's neptune-graph APIs to interact with Neptune Analytics.
 import json
 import logging
 import os
-import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import boto3
 from botocore.exceptions import ClientError
@@ -71,9 +70,7 @@ class NeptuneAnalyticsAdapter(DatabaseAdapter):
 
         # Validate we have a graph ID
         if not self.graph_id:
-            raise ValueError(
-                f"Invalid Neptune Analytics endpoint: {endpoint_str}"
-            )
+            raise ValueError(f"Invalid Neptune Analytics endpoint: {endpoint_str}")
 
         logger.info(
             f"Neptune Analytics adapter configured with graph ID: {self.graph_id}, region: {self.region}"

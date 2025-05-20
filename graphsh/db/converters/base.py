@@ -5,7 +5,7 @@ This module provides the base class for all database-specific converters
 that transform native database formats to GraphSh models.
 """
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List
 
 
 class BaseConverter:

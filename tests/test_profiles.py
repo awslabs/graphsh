@@ -5,7 +5,6 @@ import json
 import tempfile
 from unittest.mock import patch, mock_open
 
-import pytest
 
 from graphsh.config.profiles import ConnectionProfiles
 

@@ -4,10 +4,7 @@ Integration tests for Neo4j adapter.
 These tests require a running Neo4j instance.
 """
 
-import pytest
-import json
 import re
-from graphsh.cli.app import GraphShApp
 from io import StringIO
 import sys
 

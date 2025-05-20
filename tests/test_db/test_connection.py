@@ -37,6 +37,7 @@ def test_connect_with_none_auth(mock_adapter):
         # Verify the adapter was created with the correct parameters
         assert manager.current_connection is True
 
+
 def test_execute_query(mock_adapter):
     """Test executing query."""
     with patch(

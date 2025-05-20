@@ -2,11 +2,9 @@
 Tests for GraphSh REPL.
 """
 
-import os
 from unittest.mock import MagicMock, patch
 
 import pytest
-from prompt_toolkit.document import Document
 
 from graphsh.cli.repl import GraphShRepl
 

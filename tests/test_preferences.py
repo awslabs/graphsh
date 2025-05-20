@@ -6,9 +6,7 @@ import os
 import json
 import tempfile
 import shutil
-from pathlib import Path
 
-import pytest
 
 from graphsh.config.preferences import UserPreferences, DEFAULT_PREFERENCES
 

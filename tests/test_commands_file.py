@@ -9,7 +9,6 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from graphsh.cli.app import GraphShApp
-from graphsh.cli.logger import get_logger
 
 
 @pytest.fixture

@@ -2,7 +2,6 @@
 Tests for graph data models.
 """
 
-import pytest
 from graphsh.models.graph import (
     GraphNode,
     GraphEdge,

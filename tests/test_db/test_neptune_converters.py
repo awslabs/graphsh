@@ -2,9 +2,7 @@
 Tests for neptune converters.
 """
 
-import pytest
 from graphsh.db.converters.neptune import NeptuneGremlinConverter
-from graphsh.models.graph import GraphNode, GraphEdge, GraphPath
 
 
 def test_neptune_converter_node():

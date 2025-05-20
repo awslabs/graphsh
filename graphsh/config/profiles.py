@@ -6,7 +6,6 @@ that persist across sessions.
 
 import json
 import os
-from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 

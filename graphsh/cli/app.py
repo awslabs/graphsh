@@ -7,7 +7,7 @@ import sys
 import logging
 import time
 import urllib3
-from typing import Optional, Dict, Any, List, Tuple
+from typing import Dict, Any, List
 
 import click
 from rich.console import Console
@@ -364,10 +364,12 @@ class GraphShApp:
     "--endpoint", help="Database endpoint URL (e.g., https://example.com:8182)"
 )
 @click.option(
-    "--cluster-id", help="Cluster identifier of Neptune database (only applicable for neptune type)"
+    "--cluster-id",
+    help="Cluster identifier of Neptune database (only applicable for neptune type)",
 )
 @click.option(
-    "--graph-id", help="Graph identifier of Neptune Analytics graphs (only applicable for neptune-analytics type)"
+    "--graph-id",
+    help="Graph identifier of Neptune Analytics graphs (only applicable for neptune-analytics type)",
 )
 @click.option("--auth", help="Authentication type (iam, none)")
 @click.option("--username", help="Username for basic auth")
