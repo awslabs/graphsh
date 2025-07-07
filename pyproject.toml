@@ -9,7 +9,7 @@ description = "Interactive Terminal Client for Graph Databases"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
-    {name = "Sainath Mallidi", email = "sainath@amazon.com"}
+    {name = "amazon-neptune", email = "amazon-neptune-pypi@amazon.com"}
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -34,8 +34,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/cornerwings/graphsh"
-Repository = "https://github.com/cornerwings/graphsh"
+Homepage = "https://github.com/awslabs/graphsh"
+Repository = "https://github.com/awslabs/graphsh"
 
 [project.scripts]
 graphsh = "graphsh.cli.app:main"
