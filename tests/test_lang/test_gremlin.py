@@ -31,4 +31,3 @@ def test_get_syntax_lexer():
     processor = GremlinProcessor()
     lexer = processor.get_syntax_lexer()
     assert lexer is GroovyLexer
-

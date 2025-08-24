@@ -10,6 +10,9 @@ from prompt_toolkit import PromptSession
 from prompt_toolkit.history import FileHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.completion import WordCompleter, Completer, Completion
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.keys import Keys
+from prompt_toolkit.filters import Condition
 import os.path
 
 from graphsh.cli.logger import get_logger
@@ -38,17 +41,53 @@ class GraphShRepl:
         history_dir = os.path.expanduser("~/.graphsh")
         os.makedirs(history_dir, exist_ok=True)
 
+        # Initialize key bindings for multi-line support
+        self.key_bindings = self._create_key_bindings()
+
         # Initialize prompt session with history
         self.history_file = os.path.join(history_dir, "history")
         self.session = PromptSession(
             history=FileHistory(self.history_file),
             auto_suggest=AutoSuggestFromHistory(),
             enable_history_search=True,
+            multiline=True,
+            key_bindings=self.key_bindings,
         )
 
         # Initialize command completer with commands from registry
         self.commands = [f"/{cmd}" for cmd in self.command_registry.commands.keys()]
         self.command_completer = WordCompleter(self.commands, pattern=r"^/")
+
+    def _create_key_bindings(self) -> KeyBindings:
+        """Create key bindings for multi-line input.
+
+        Returns:
+            KeyBindings: Configured key bindings.
+        """
+        bindings = KeyBindings()
+
+        # Enter key: Accept and submit (preserves history)
+        @bindings.add(Keys.Enter)
+        def submit_query(event):
+            """Submit query on Enter while preserving history."""
+            buffer = event.current_buffer
+            text = buffer.text
+
+            # Manually append to history if there's content
+            if text.strip():
+                event.app.current_buffer.history.append_string(text)
+
+            # Clear completion state and exit
+            buffer.complete_state = None
+            event.app.exit(result=text)
+
+        # Multi-line input bindings
+        @bindings.add("escape", "enter")  # Alt+Enter
+        def new_line_alt_enter(event):
+            """Insert new line on Alt+Enter."""
+            event.current_buffer.insert_text("\n")
+
+        return bindings
 
     def run(self) -> None:
         """Run REPL loop."""
@@ -56,6 +95,9 @@ class GraphShRepl:
             "[bold green]GraphSh - Interactive Terminal Client for Graph Databases[/bold green]"
         )
         console.print("Type '/help' for help, '/quit' to exit.")
+        console.print(
+            "[dim]Tip: Press Enter to submit, Alt/Option+Enter for new line[/dim]"
+        )
 
         while True:
             try:
@@ -65,7 +107,10 @@ class GraphShRepl:
                 # Use the unified completer for all languages
                 completer = GraphShCompleter(self.app, self.commands)
                 line = self.session.prompt(
-                    prompt, completer=completer, complete_while_typing=True
+                    prompt,
+                    completer=completer,
+                    complete_while_typing=True,
+                    prompt_continuation=" " * len(prompt),
                 )
 
                 # Process input
