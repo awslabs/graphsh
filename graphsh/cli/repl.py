@@ -7,9 +7,11 @@ import logging
 
 from rich.console import Console
 from prompt_toolkit import PromptSession
+from prompt_toolkit import search
 from prompt_toolkit.history import FileHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.completion import WordCompleter, Completer, Completion
+from prompt_toolkit.filters import is_searching
 from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.keys import Keys
 from prompt_toolkit.lexers import PygmentsLexer
@@ -22,8 +24,6 @@ from graphsh.cli.commands import CommandRegistry
 
 console = Console()
 logger = logging.getLogger(__name__)
-
-
 
 
 class GraphShRepl:
@@ -60,6 +60,7 @@ class GraphShRepl:
             multiline=True,
             key_bindings=self.key_bindings,
             style=self.syntax_style,
+            include_default_pygments_style=False
         )
 
         # Initialize command completer with commands from registry
@@ -105,25 +106,16 @@ class GraphShRepl:
         """
         bindings = KeyBindings()
 
-        # Enter key: Accept and submit (preserves history)
-        @bindings.add(Keys.Enter)
-        def submit_query(event):
-            """Submit query on Enter while preserving history."""
-            buffer = event.current_buffer
-            text = buffer.text
+        @bindings.add("enter", filter=~is_searching)
+        def _(event):
+            event.current_buffer.validate_and_handle()
 
-            # Manually append to history if there's content
-            if text.strip():
-                event.app.current_buffer.history.append_string(text)
+        @bindings.add("enter", filter=is_searching)
+        def _(event):
+            search.accept_search()
 
-            # Clear completion state and exit
-            buffer.complete_state = None
-            event.app.exit(result=text)
-
-        # Multi-line input bindings
         @bindings.add("escape", "enter")  # Alt+Enter
-        def new_line_alt_enter(event):
-            """Insert new line on Alt+Enter."""
+        def _(event):
             event.current_buffer.insert_text("\n")
 
         return bindings
@@ -134,9 +126,6 @@ class GraphShRepl:
             "[bold green]GraphSh - Interactive Terminal Client for Graph Databases[/bold green]"
         )
         console.print("Type '/help' for help, '/quit' to exit.")
-        console.print(
-            "[dim]Tip: Press Enter to submit, Alt/Option+Enter for new line[/dim]"
-        )
 
         while True:
             try:
