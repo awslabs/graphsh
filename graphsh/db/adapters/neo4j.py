@@ -81,6 +81,7 @@ class Neo4jAdapter(DatabaseAdapter):
                 "aws_profile",
                 "region",
                 "ssl",
+                "verify_ssl",
                 "profile",
                 "type",
             ]:
