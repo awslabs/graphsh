@@ -28,4 +28,3 @@ class LanguageProcessor(ABC):
             Any: Pygments lexer class.
         """
         pass
-

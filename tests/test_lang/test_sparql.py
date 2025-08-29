@@ -66,10 +66,12 @@ def test_validate_query_invalid(processor):
     is_valid = processor.validate(query)
     assert is_valid is False
 
+
 def test_get_syntax_lexer(processor):
     """Test getting syntax lexer."""
     lexer = processor.get_syntax_lexer()
     assert lexer is SparqlLexer
+
 
 def test_check_balanced_braces(processor):
     """Test checking for balanced braces."""

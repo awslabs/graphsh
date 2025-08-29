@@ -7,9 +7,16 @@ import logging
 
 from rich.console import Console
 from prompt_toolkit import PromptSession
+from prompt_toolkit import search
 from prompt_toolkit.history import FileHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.completion import WordCompleter, Completer, Completion
+from prompt_toolkit.filters import is_searching
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.keys import Keys
+from prompt_toolkit.lexers import PygmentsLexer
+from prompt_toolkit.styles.pygments import style_from_pygments_cls
+from pygments.styles import get_style_by_name
 import os.path
 
 from graphsh.cli.logger import get_logger
@@ -38,17 +45,80 @@ class GraphShRepl:
         history_dir = os.path.expanduser("~/.graphsh")
         os.makedirs(history_dir, exist_ok=True)
 
+        # Initialize key bindings for multi-line support
+        self.key_bindings = self._create_key_bindings()
+
+        # Initialize syntax highlighting style
+        self.syntax_style = self._create_syntax_style()
+
         # Initialize prompt session with history
         self.history_file = os.path.join(history_dir, "history")
         self.session = PromptSession(
             history=FileHistory(self.history_file),
             auto_suggest=AutoSuggestFromHistory(),
             enable_history_search=True,
+            multiline=True,
+            key_bindings=self.key_bindings,
+            style=self.syntax_style,
+            include_default_pygments_style=False
         )
 
         # Initialize command completer with commands from registry
         self.commands = [f"/{cmd}" for cmd in self.command_registry.commands.keys()]
         self.command_completer = WordCompleter(self.commands, pattern=r"^/")
+
+    def _get_current_lexer(self):
+        """Get the current language lexer for syntax highlighting.
+
+        Returns:
+            PygmentsLexer: Lexer for current language.
+        """
+        try:
+            # Get the lexer class from the current language processor
+            lexer_class = self.app.language_processor.get_syntax_lexer()
+            return PygmentsLexer(lexer_class)
+        except (AttributeError, ImportError):
+            # Fallback to no highlighting if lexer is not available
+            return None
+
+    def _create_syntax_style(self):
+        """Create a syntax highlighting style using pygments theme.
+
+        Returns:
+            Style: Prompt-toolkit style using theme.
+        """
+        try:
+            pygments_style = get_style_by_name("lightbulb")
+            return style_from_pygments_cls(pygments_style)
+        except Exception:
+            try:
+                pygments_style = get_style_by_name("default")
+                return style_from_pygments_cls(pygments_style)
+            except Exception:
+                # Final fallback to no custom styling
+                return None
+
+    def _create_key_bindings(self) -> KeyBindings:
+        """Create key bindings for multi-line input.
+
+        Returns:
+            KeyBindings: Configured key bindings.
+        """
+        bindings = KeyBindings()
+
+        @bindings.add("enter", filter=~is_searching)
+        def _(event):
+            event.current_buffer.validate_and_handle()
+
+        @bindings.add("enter", filter=is_searching)
+        def _(event):
+            search.accept_search()
+
+        @bindings.add("escape", "enter")  # Alt+Enter
+        def _(event):
+            event.current_buffer.insert_text("\n")
+
+        return bindings
 
     def run(self) -> None:
         """Run REPL loop."""
@@ -64,8 +134,16 @@ class GraphShRepl:
 
                 # Use the unified completer for all languages
                 completer = GraphShCompleter(self.app, self.commands)
+
+                # Get syntax highlighting lexer for current language
+                lexer = self._get_current_lexer()
+
                 line = self.session.prompt(
-                    prompt, completer=completer, complete_while_typing=True
+                    prompt,
+                    completer=completer,
+                    complete_while_typing=True,
+                    prompt_continuation=" " * len(prompt),
+                    lexer=lexer,
                 )
 
                 # Process input
