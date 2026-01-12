@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Amazon Neptune with public endpoint for integration testing
+
+Parameters:
+  DBInstanceClass:
+    Type: String
+    Default: db.t3.medium
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+  SubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: At least 2 subnets in different AZs
+
+Resources:
+  SubnetGroup:
+    Type: AWS::Neptune::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Neptune integration test
+      SubnetIds: !Ref SubnetIds
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Neptune integration test
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8182
+          ToPort: 8182
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8192
+          ToPort: 8192
+          CidrIp: 0.0.0.0/0
+
+  Cluster:
+    Type: AWS::Neptune::DBCluster
+    Properties:
+      DBSubnetGroupName: !Ref SubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref SecurityGroup
+      EngineVersion: '1.4.6.2'
+      Port: 8192
+      IamAuthEnabled: true
+      StorageEncrypted: true
+      DeletionProtection: false
+    DeletionPolicy: Delete
+
+  Instance:
+    Type: AWS::Neptune::DBInstance
+    Properties:
+      DBClusterIdentifier: !Ref Cluster
+      DBInstanceClass: !Ref DBInstanceClass
+      PubliclyAccessible: true
+    DeletionPolicy: Delete
+
+Outputs:
+  Endpoint:
+    Value: !Sub 'https://${Cluster.Endpoint}:${Cluster.Port}'
+  Host:
+    Value: !GetAtt Cluster.Endpoint
+  Port:
+    Value: !GetAtt Cluster.Port

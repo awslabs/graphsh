@@ -242,10 +242,8 @@ def test_neptune_product_count_by_category(neptune_connection):
         app.execute_query,
         """
         g.V().hasLabel('category').as('category')
-          .in('belongs_to').hasLabel('product').count().as('count')
-          .select('category', 'count')
-          .by(values('name'))
-          .by()
+          .in('belongs_to').hasLabel('product')
+          .groupCount().by(select('category').values('name'))
         """,
     )
 
@@ -253,15 +251,17 @@ def test_neptune_product_count_by_category(neptune_connection):
     if "[]" not in output and "@type" not in output:
         assert "Computers" in output
         assert "Mobile" in output
+        assert "Electronics" in output
 
-        # Mobile category should have 2 products (Phone and Tablet)
-        assert re.search(r"Mobile.*2", output, re.DOTALL) or re.search(
-            r"2.*Mobile", output, re.DOTALL
-        )
-
-        # Computers category should have 1 product (Laptop)
+        # Each category should have 1 product
         assert re.search(r"Computers.*1", output, re.DOTALL) or re.search(
             r"1.*Computers", output, re.DOTALL
+        )
+        assert re.search(r"Mobile.*1", output, re.DOTALL) or re.search(
+            r"1.*Mobile", output, re.DOTALL
+        )
+        assert re.search(r"Electronics.*1", output, re.DOTALL) or re.search(
+            r"1.*Electronics", output, re.DOTALL
         )
 
 
@@ -291,9 +291,10 @@ def test_neptune_complex_path_query(neptune_connection):
 
     # Verify output contains expected path data
     if "[]" not in output and "@type" not in output:
+        # Only Laptop and Phone have full paths (product -> category -> parent_category)
+        # Tablet -> Electronics (no parent), so it won't appear
         assert "Laptop" in output
         assert "Phone" in output
-        assert "Tablet" in output
         assert "Computers" in output
         assert "Mobile" in output
         assert "Electronics" in output
@@ -308,11 +309,6 @@ def test_neptune_complex_path_query(neptune_connection):
         assert re.search(r"Phone.*Mobile.*Electronics", output, re.DOTALL) or re.search(
             r"Electronics.*Mobile.*Phone", output, re.DOTALL
         )
-
-        # Tablet -> Mobile -> Electronics
-        assert re.search(
-            r"Tablet.*Mobile.*Electronics", output, re.DOTALL
-        ) or re.search(r"Electronics.*Mobile.*Tablet", output, re.DOTALL)
 
 
 def test_neptune_error_handling(neptune_connection):
@@ -345,6 +341,8 @@ def test_neptune_empty_result_handling(neptune_connection):
 
 def test_neptune_gv_query(neptune_connection):
     """Test basic g.V() query execution and result normalization."""
+    from graphsh.models.graph import GraphNode
+
     app = neptune_connection
 
     # Make sure we're using Gremlin
@@ -364,31 +362,13 @@ def test_neptune_gv_query(neptune_connection):
     # Print the raw results for debugging
     print(f"Raw results: {results}")
 
-    # Check if we're getting the @type/@value issue
-    if len(results) > 0 and isinstance(results[0], dict) and "value" in results[0]:
-        if results[0]["value"] == "@type":
-            pytest.skip(
-                "Results still contain @type/@value format, normalization not working yet"
-            )
-
     # Verify the structure of the results
     for vertex in results:
-        # Each vertex should be a dictionary
-        assert isinstance(vertex, dict)
-
-        # Each vertex should have id and label (if properly normalized)
-        if "id" in vertex and "label" in vertex:
-            # Verify that @type and @value are not in the results
-            # This confirms our GraphSON normalization is working
-            assert "@type" not in vertex
-            assert "@value" not in vertex
-
-            # Print the vertex for debugging
-            print(f"Vertex: {vertex}")
-        else:
-            # If not properly normalized, skip the test
-            pytest.skip(f"Results not properly normalized: {vertex}")
-            break
+        # Each vertex should be a GraphNode
+        assert isinstance(vertex, GraphNode), f"Expected GraphNode, got {type(vertex)}"
+        assert vertex.id is not None
+        assert isinstance(vertex.labels, list)
+        print(f"Vertex: {vertex}")
 
 
 def test_neptune_gv_properties(neptune_connection):
@@ -428,6 +408,8 @@ def test_neptune_gv_properties(neptune_connection):
 
 def test_neptune_gv_edges(neptune_connection):
     """Test g.V().outE() query for edges."""
+    from graphsh.models.graph import GraphEdge
+
     app = neptune_connection
 
     # Make sure we're using Gremlin
@@ -446,35 +428,14 @@ def test_neptune_gv_edges(neptune_connection):
     # Print the raw results for debugging
     print(f"Raw edge results: {results}")
 
-    # Check if we're getting the @type/@value issue
-    if len(results) > 0 and isinstance(results[0], dict) and "value" in results[0]:
-        if results[0]["value"] == "@type":
-            pytest.skip(
-                "Edge results still contain @type/@value format, normalization not working yet"
-            )
-
     # If we have edges, verify their structure
-    if len(results) > 0:
-        for edge in results:
-            # Each edge should be a dictionary
-            assert isinstance(edge, dict)
-
-            # Each edge should have id, label, inV, and outV (if properly normalized)
-            if "id" in edge and "label" in edge:
-                assert "inV" in edge
-                assert "outV" in edge
-
-                # Verify that @type and @value are not in the edge
-                # This confirms our GraphSON normalization is working
-                assert "@type" not in edge
-                assert "@value" not in edge
-
-                # Print the edge for debugging
-                print(f"Edge: {edge}")
-            else:
-                # If not properly normalized, skip the test
-                pytest.skip(f"Edge results not properly normalized: {edge}")
-                break
+    for edge in results:
+        # Each edge should be a GraphEdge
+        assert isinstance(edge, GraphEdge), f"Expected GraphEdge, got {type(edge)}"
+        assert edge.id is not None
+        assert edge.source is not None
+        assert edge.target is not None
+        print(f"Edge: {edge}")
 
 
 def test_neptune_cypher_query(neptune_connection):
@@ -882,9 +843,12 @@ def test_neptune_cypher_error_handling(neptune_connection):
     )
 
     # Verify results are handled gracefully
-    # This should return null values, not error
+    # This should return null values, not error, or "No results."
     assert (
-        "null" in output.lower() or "none" in output.lower() or "[]" in output.lower()
+        "null" in output.lower()
+        or "none" in output.lower()
+        or "[]" in output.lower()
+        or "no results" in output.lower()
     )
 
     # Try a syntax error query

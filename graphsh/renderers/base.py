@@ -35,14 +35,28 @@ class ResultRenderer:
             return
 
         # Process results through the graph formatter
-        from graphsh.models.graph import format_graph_element
+        from graphsh.models.graph import (
+            format_graph_element,
+            GraphNode,
+            GraphEdge,
+            GraphPath,
+            GraphValue,
+        )
 
         processed_results = []
         for result in results:
-            processed_result = {}
-            for key, value in result.items():
-                processed_result[key] = format_graph_element(value)
-            processed_results.append(processed_result)
+            # Handle graph objects directly
+            if isinstance(result, (GraphNode, GraphEdge, GraphPath, GraphValue)):
+                processed_results.append({"result": format_graph_element(result)})
+            # Handle dictionaries
+            elif isinstance(result, dict):
+                processed_result = {}
+                for key, value in result.items():
+                    processed_result[key] = format_graph_element(value)
+                processed_results.append(processed_result)
+            # Handle other types
+            else:
+                processed_results.append({"result": format_graph_element(result)})
 
         rendered = self.render(processed_results)
         console.print(rendered)

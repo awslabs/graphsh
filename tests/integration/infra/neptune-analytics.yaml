@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Amazon Neptune Analytics graph for integration testing
+
+Parameters:
+  GraphName:
+    Type: String
+    Default: graphsh-test
+  ProvisionedMemory:
+    Type: Number
+    Default: 16
+    Description: Memory in NCUs (Neptune Capacity Units)
+
+Resources:
+  Graph:
+    Type: AWS::NeptuneGraph::Graph
+    Properties:
+      GraphName: !Ref GraphName
+      ProvisionedMemory: !Ref ProvisionedMemory
+      PublicConnectivity: true
+      ReplicaCount: 0
+      DeletionProtection: false
+    DeletionPolicy: Delete
+
+Outputs:
+  GraphId:
+    Value: !GetAtt Graph.GraphId
+  Endpoint:
+    Value: !GetAtt Graph.Endpoint

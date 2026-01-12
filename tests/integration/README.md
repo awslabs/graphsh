@@ -1,90 +1,77 @@
-# Integration Tests for GraphSh
+# Integration Tests
 
-This directory contains integration tests for GraphSh that test the application's interaction with actual graph databases.
+Integration tests for GraphSh with Docker-based Neo4j and AWS-deployed Neptune.
 
-## Test Setup
+## Structure
 
-### Prerequisites
-
-- Docker installed and running
-- Python 3.9+ with pytest
-
-### Database Containers
-
-The integration tests use Docker containers to run the necessary graph databases:
-
-1. **TinkerPop Gremlin Server**
-   ```bash
-   docker run -d --name tinkerpop-server -p 8182:8182 tinkerpop/gremlin-server:latest
-   ```
-
-2. **Neptune (Local Development Version)**
-   ```bash
-   docker run -d --name neptune-test --shm-size=16g -p 8182:8182 neptune-test
-   ```
-   Note: The Neptune container requires more resources and may not be available in all environments.
-
-3. **Neo4j**
-   ```bash
-   docker run -d --name neo4j -p 7474:7474 -p 7687:7687 -e NEO4J_AUTH=neo4j/password neo4j:latest
-   ```
+```
+tests/integration/
+├── conftest.py          # Fixtures with auto-deploy
+├── stack_manager.py     # CloudFormation stack management (Neptune)
+├── infra/               # CloudFormation templates
+│   ├── neptune.yaml
+│   └── neptune-analytics.yaml
+├── neo4j/               # Neo4j tests (Docker)
+├── neptune/             # Neptune tests (AWS)
+└── common/              # Database-agnostic tests
+```
 
 ## Running Tests
 
-### All Tests
+### Neo4j (Docker-based)
 
 ```bash
-cd tests
-python -m pytest integration/
+# Runs automatically - starts/stops Docker container
+uv run pytest tests/integration/neo4j/ -v
+
+# Keep container running after tests
+KEEP_CONTAINERS=1 uv run pytest tests/integration/neo4j/ -v
+
+# Use existing Neo4j instance
+NEO4J_HOST=localhost NEO4J_PORT=7687 uv run pytest tests/integration/neo4j/ -v
 ```
 
-### Specific Database Tests
+### Neptune (AWS CloudFormation)
+
+Requires AWS credentials with permissions to create Neptune clusters, VPCs, and security groups.
 
 ```bash
-# TinkerPop Gremlin Server tests
-python -m pytest integration/test_gremlin_server.py
+# Auto-deploys Neptune stack, runs tests, tears down
+AWS_PROFILE=myprofile AWS_REGION=us-east-1 uv run pytest tests/integration/neptune/ -v
 
-# Neptune tests
-python -m pytest integration/test_neptune.py
+# Keep stack running after tests (useful for debugging)
+AWS_PROFILE=myprofile AWS_REGION=us-east-1 KEEP_STACKS=1 uv run pytest tests/integration/neptune/ -v
 
-# Neo4j tests
-python -m pytest integration/test_neo4j.py
+# Use existing Neptune endpoint
+NEPTUNE_HOST=my-cluster.region.neptune.amazonaws.com uv run pytest tests/integration/neptune/ -v
 ```
 
-## Test Configuration
+### Neptune Analytics (AWS CloudFormation)
 
-The tests use environment variables to configure database connections:
+Requires AWS credentials with permissions to create Neptune Analytics graphs.
 
-- **Gremlin Server / Neptune**:
-  - `NEPTUNE_HOST`: Hostname (default: localhost)
-  - `NEPTUNE_PORT`: Port (default: 8182)
+```bash
+# Auto-deploys Neptune Analytics graph, runs tests, tears down
+AWS_PROFILE=myprofile AWS_REGION=us-east-1 uv run pytest tests/integration/neptune_analytics/ -v
 
-- **Neo4j**:
-  - `NEO4J_HOST`: Hostname (default: localhost)
-  - `NEO4J_PORT`: Port (default: 7687)
-  - `NEO4J_USER`: Username (default: neo4j)
-  - `NEO4J_PASSWORD`: Password (default: password)
+# Keep graph running after tests
+AWS_PROFILE=myprofile AWS_REGION=us-east-1 KEEP_STACKS=1 uv run pytest tests/integration/neptune_analytics/ -v
 
-## Test Structure
+# Use existing graph
+NEPTUNE_ANALYTICS_GRAPH_ID=g-abc123 uv run pytest tests/integration/neptune_analytics/ -v
+```
 
-Each test file follows a similar pattern:
+## Environment Variables
 
-1. A fixture that sets up the database connection and test data
-2. Test functions that verify different aspects of the GraphSh functionality
-
-## Known Issues
-
-- SSL certificate verification issues with Neptune may require disabling SSL verification in tests
-- Connection timeouts may occur if the database containers are not fully initialized
-- The tests use `pytest.skip()` to handle cases where the database is not available
-- When using HTTPS with Neptune, make sure to use the hostname only (not the protocol) in the endpoint parameter
-
-## Adding New Tests
-
-When adding new tests:
-
-1. Create a new test file in the `integration/` directory
-2. Use the existing test files as templates
-3. Create a fixture that sets up the necessary database connection and test data
-4. Write test functions that verify the functionality being tested
-5. Use `pytest.skip()` to handle cases where the database is not available
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `NEO4J_HOST` | Neo4j hostname | (starts Docker) |
+| `NEO4J_PORT` | Neo4j port | 7687 |
+| `NEO4J_USER` | Neo4j username | neo4j |
+| `NEO4J_PASSWORD` | Neo4j password | testpassword |
+| `KEEP_CONTAINERS` | Don't stop Docker containers | - |
+| `NEPTUNE_HOST` | Neptune hostname | (deploys stack) |
+| `NEPTUNE_PORT` | Neptune port | 8192 |
+| `NEPTUNE_ANALYTICS_GRAPH_ID` | Neptune Analytics graph ID | (deploys stack) |
+| `AWS_REGION` | AWS region for deployment | us-east-1 |
+| `KEEP_STACKS` | Don't teardown AWS stacks | - |

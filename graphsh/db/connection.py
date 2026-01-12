@@ -165,12 +165,16 @@ class Connection:
             # Execute query using adapter
             result = self.adapter.execute_query(query, language)
 
-            # If result has proper structure, return it
+            # If result has proper structure with "results" key, extract it
             if isinstance(result, dict) and "results" in result:
                 return result["results"]
 
-            # Otherwise, return a simple result structure
-            return [{"result": result}]
+            # If result is already a list, return it directly
+            if isinstance(result, list):
+                return result
+
+            # Otherwise, wrap single result in a list
+            return [result]
 
         except Exception as e:
             logger.error(f"Query execution error: {e}")
