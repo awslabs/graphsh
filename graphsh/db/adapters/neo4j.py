@@ -3,7 +3,7 @@ Neo4j database adapter for GraphSh.
 """
 
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from neo4j import GraphDatabase
 from neo4j.exceptions import ServiceUnavailable, AuthError
@@ -53,6 +53,59 @@ class Neo4jAdapter(DatabaseAdapter):
         self.protocol, self.host, self.port, self.use_ssl = self.parse_endpoint(
             endpoint, **options
         )
+
+    def get_explain_modes(self) -> List[str]:
+        """Get supported explain modes for Neo4j.
+
+        Returns:
+            List[str]: Supported modes.
+        """
+        return ["off", "explain", "profile"]
+
+    def execute_explain(
+        self, query: str, language: str, mode: str = "explain", **params
+    ) -> List[Dict[str, Any]]:
+        """Execute query with EXPLAIN or PROFILE prefix.
+
+        Args:
+            query: Query string.
+            language: Query language.
+            mode: Explain mode (explain or profile).
+            **params: Additional query parameters.
+
+        Returns:
+            List[Dict[str, Any]]: Explain results.
+        """
+        if not self.driver:
+            if not self.connect():
+                return [{"error": "Not connected to Neo4j"}]
+
+        prefix = "PROFILE" if mode == "profile" else "EXPLAIN"
+        explain_query = f"{prefix} {query}"
+
+        try:
+            with self.driver.session() as session:
+                result = session.run(explain_query, params)
+                summary = result.consume()
+                plan = summary.plan if mode == "explain" else summary.profile
+                return [{"explain": self._format_plan(plan)}]
+        except Exception as e:
+            return [{"error": str(e)}]
+
+    def _format_plan(self, plan, indent: int = 0) -> str:
+        """Format query plan as readable string."""
+        if not plan:
+            return "No plan available"
+        lines = []
+        prefix = "  " * indent
+        lines.append(f"{prefix}{plan.operator_type}")
+        if hasattr(plan, "arguments") and plan.arguments:
+            for k, v in plan.arguments.items():
+                lines.append(f"{prefix}  {k}: {v}")
+        if hasattr(plan, "children"):
+            for child in plan.children:
+                lines.append(self._format_plan(child, indent + 1))
+        return "\n".join(lines)
 
     def connect(self) -> bool:
         """Establish connection to Neo4j.

@@ -60,7 +60,7 @@ class GraphShRepl:
             multiline=True,
             key_bindings=self.key_bindings,
             style=self.syntax_style,
-            include_default_pygments_style=False
+            include_default_pygments_style=False,
         )
 
         # Initialize command completer with commands from registry

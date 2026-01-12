@@ -73,6 +73,7 @@ class GraphShApp:
         self.renderer = get_renderer(self.output_format)
         self.repl = None  # Will be set when running in interactive mode
         self.timing_enabled = self.preferences.get("timing", False)
+        self.explain_mode = "off"
 
     def connect(self, **kwargs) -> bool:
         """Connect to database.
@@ -260,7 +261,27 @@ class GraphShApp:
             # Validate query
             self.language_processor.validate(query)
 
-            # Execute query
+            # Execute query with explain mode if enabled
+            if self.explain_mode and self.explain_mode != "off":
+                adapter = self.connection.adapter
+                if hasattr(adapter, "execute_explain"):
+                    results = adapter.execute_explain(
+                        query, self.current_language, self.explain_mode
+                    )
+                    # Display explain output as plain text
+                    if results and "explain" in results[0]:
+                        console.print(results[0]["explain"])
+                    elif results and "error" in results[0]:
+                        console.print(
+                            f"[bold red]Error:[/bold red] {results[0]['error']}"
+                        )
+                    return results
+                else:
+                    console.print(
+                        "[yellow]Explain not supported for this adapter[/yellow]"
+                    )
+
+            # Execute query normally
             results = self.connection.execute(query)
 
             # Calculate execution time if timing is enabled

@@ -96,3 +96,28 @@ class DatabaseAdapter(ABC):
             List[Dict[str, Any]]: Query results.
         """
         pass
+
+    def get_explain_modes(self) -> List[str]:
+        """Get supported explain modes for this adapter.
+
+        Returns:
+            List[str]: List of supported explain modes.
+        """
+        return ["off", "on"]
+
+    def execute_explain(
+        self, query: str, language: str, mode: str = "on", **params
+    ) -> List[Dict[str, Any]]:
+        """Execute query with explain/profile mode.
+
+        Args:
+            query: Query string.
+            language: Query language.
+            mode: Explain mode (adapter-specific).
+            **params: Additional query parameters.
+
+        Returns:
+            List[Dict[str, Any]]: Explain results.
+        """
+        # Default implementation - subclasses should override
+        return [{"error": f"Explain mode not supported for this adapter"}]
