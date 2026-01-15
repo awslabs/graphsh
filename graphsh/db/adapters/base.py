@@ -100,13 +100,19 @@ class DatabaseAdapter(ABC):
     def get_explain_modes(self) -> List[str]:
         """Get supported explain modes for this adapter.
 
+        Standard modes: off, explain, profile, details
+        - off: No explain
+        - explain: Basic query plan (static analysis)
+        - profile: Execution stats (dynamic analysis)
+        - details: Most verbose output
+
         Returns:
             List[str]: List of supported explain modes.
         """
-        return ["off", "on"]
+        return ["off", "explain"]
 
     def execute_explain(
-        self, query: str, language: str, mode: str = "on", **params
+        self, query: str, language: str, mode: str = "explain", **params
     ) -> List[Dict[str, Any]]:
         """Execute query with explain/profile mode.
 

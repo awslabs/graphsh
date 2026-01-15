@@ -103,33 +103,19 @@ class NeptuneAdapter(DatabaseAdapter):
         )
 
     def get_explain_modes(self) -> List[str]:
-        """Get supported explain modes for Neptune.
-
-        Returns:
-            List[str]: Supported modes vary by language.
-        """
-        return ["off", "explain", "profile", "static", "dynamic", "details"]
+        """Get supported explain modes for Neptune."""
+        return ["off", "explain", "profile", "details"]
 
     def execute_explain(
         self, query: str, language: str, mode: str = "explain", **params
     ) -> List[Dict[str, Any]]:
-        """Execute query with explain/profile mode.
-
-        Args:
-            query: Query string.
-            language: Query language.
-            mode: Explain mode.
-            **params: Additional query parameters.
-
-        Returns:
-            List[Dict[str, Any]]: Explain results.
-        """
+        """Execute query with explain/profile mode."""
         if language == "gremlin":
             return self._execute_gremlin_explain(query, mode, **params)
         elif language == "cypher":
             return self._execute_cypher_explain(query, mode, **params)
         elif language == "sparql":
-            return [{"error": "SPARQL explain not supported"}]
+            return self._execute_sparql_explain(query, mode, **params)
         else:
             return [{"error": f"Unsupported language: {language}"}]
 
@@ -141,13 +127,39 @@ class NeptuneAdapter(DatabaseAdapter):
             self.connect()
 
         protocol = "https" if self.use_ssl else "http"
-        endpoint_path = "explain" if mode in ["explain", "static"] else "profile"
+        # explain/details → /explain, profile → /profile
+        endpoint_path = "profile" if mode == "profile" else "explain"
         url = f"{protocol}://{self.host}:{self.port}/gremlin/{endpoint_path}"
 
         try:
             payload = {"gremlin": query}
             response = self.http_session.post(
                 url, json=payload, headers={"Content-Type": "application/json"}
+            )
+            response.raise_for_status()
+            return [{"explain": response.text}]
+        except Exception as e:
+            return [{"error": str(e)}]
+
+    def _execute_sparql_explain(
+        self, query: str, mode: str, **params
+    ) -> List[Dict[str, Any]]:
+        """Execute SPARQL explain."""
+        if not self.http_session:
+            self.connect()
+
+        protocol = "https" if self.use_ssl else "http"
+        url = f"{protocol}://{self.host}:{self.port}/sparql"
+
+        # Map standard modes to Neptune SPARQL modes
+        mode_map = {"explain": "static", "profile": "dynamic", "details": "details"}
+        sparql_mode = mode_map.get(mode, "static")
+
+        try:
+            response = self.http_session.post(
+                url,
+                data={"query": query, "explain": sparql_mode},
+                headers={"Accept": "text/plain"},
             )
             response.raise_for_status()
             return [{"explain": response.text}]
@@ -164,10 +176,9 @@ class NeptuneAdapter(DatabaseAdapter):
         protocol = "https" if self.use_ssl else "http"
         url = f"{protocol}://{self.host}:{self.port}/openCypher"
 
-        # Map modes to Neptune's openCypher explain modes
-        cypher_mode = {"explain": "static", "static": "static"}.get(mode, mode)
-        if cypher_mode not in ["static", "dynamic", "details"]:
-            cypher_mode = "dynamic"
+        # Map standard modes to Neptune openCypher modes
+        mode_map = {"explain": "static", "profile": "dynamic", "details": "details"}
+        cypher_mode = mode_map.get(mode, "static")
 
         try:
             response = self.http_session.post(

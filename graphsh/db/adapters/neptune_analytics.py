@@ -185,3 +185,38 @@ class NeptuneAnalyticsAdapter(DatabaseAdapter):
         except Exception as e:
             logger.warning(f"Error executing OpenCypher query: {e}")
             return [{"error": str(e)}]
+
+    def get_explain_modes(self) -> List[str]:
+        """Get supported explain modes for Neptune Analytics."""
+        return ["off", "explain", "details"]
+
+    def execute_explain(
+        self, query: str, language: str, mode: str = "explain", **params
+    ) -> List[Dict[str, Any]]:
+        """Execute query with explain mode."""
+        if language != "cypher":
+            return [{"error": f"Explain not supported for language: {language}"}]
+
+        if not self.client:
+            self.connect()
+
+        # Map standard modes to Neptune Analytics modes
+        mode_map = {"explain": "STATIC", "details": "DETAILS"}
+        explain_mode = mode_map.get(mode, "STATIC")
+
+        try:
+            response = self.client.execute_query(
+                graphIdentifier=self.graph_id,
+                queryString=query,
+                language="OPEN_CYPHER",
+                parameters=params if params else {},
+                explain=explain_mode,
+            )
+            result = response["payload"].read().decode("utf-8")
+            return [{"explain": result}]
+        except ClientError as e:
+            error_code = e.response.get("Error", {}).get("Code", "Unknown")
+            error_message = e.response.get("Error", {}).get("Message", str(e))
+            return [{"error": f"{error_code}: {error_message}"}]
+        except Exception as e:
+            return [{"error": str(e)}]
