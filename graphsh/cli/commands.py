@@ -108,9 +108,9 @@ class CommandRegistry:
             ),
             "explain": (
                 self.cmd_explain,
-                "Set query explain mode (off, on, profile, or adapter-specific modes)",
+                "Toggle query explain mode, or set to profile/details",
                 "/explain [mode]",
-                ["/explain", "/explain on", "/explain off", "/explain profile"],
+                ["/explain", "/explain profile", "/explain details"],
             ),
         }
 
@@ -625,24 +625,17 @@ class CommandRegistry:
         console.print("[green]Disconnected from database.[/green]")
 
     def cmd_explain(self, args: List[str]) -> None:
-        """Set query explain mode.
-
-        Args:
-            args: Command arguments.
-        """
+        """Toggle or set query explain mode."""
         current_mode = getattr(self.app, "explain_mode", "off")
 
         if not args:
-            console.print(f"Current explain mode: [bold]{current_mode}[/bold]")
-            # Show available modes based on adapter
-            modes = ["off", "on"]
-            if self.app.connection.adapter:
-                adapter_modes = getattr(
-                    self.app.connection.adapter, "get_explain_modes", lambda: []
-                )()
-                if adapter_modes:
-                    modes = adapter_modes
-            console.print(f"Available modes: {', '.join(modes)}")
+            # Toggle between off and explain
+            if current_mode == "off":
+                self.app.explain_mode = "explain"
+                console.print("Explain mode [bold]enabled[/bold]")
+            else:
+                self.app.explain_mode = "off"
+                console.print("Explain mode [bold]disabled[/bold]")
             return
 
         mode = args[0].lower()
@@ -653,7 +646,7 @@ class CommandRegistry:
             )()
             if adapter_modes and mode not in adapter_modes:
                 console.print(
-                    f"[bold red]Error:[/bold red] Invalid mode '{mode}'. Available: {', '.join(adapter_modes)}"
+                    f"[bold red]Error:[/bold red] Invalid mode '{mode}'. Available: {', '.join(m for m in adapter_modes if m != 'off')}"
                 )
                 return
 
