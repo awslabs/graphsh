@@ -210,7 +210,7 @@ class NeptuneAnalyticsAdapter(DatabaseAdapter):
                 queryString=query,
                 language="OPEN_CYPHER",
                 parameters=params if params else {},
-                explain=explain_mode,
+                explainMode=explain_mode,
             )
             result = response["payload"].read().decode("utf-8")
             return [{"explain": result}]
