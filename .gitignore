@@ -53,6 +53,7 @@ site/
 *.json
 *.yaml
 !config.yaml.example
+!tests/integration/infra/*.yaml
 
 # Temporary files
 tmp/
