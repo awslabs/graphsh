@@ -31,7 +31,7 @@ def get_adapter_for_type(db_type):
         from graphsh.db.adapters.neo4j import Neo4jAdapter
 
         return Neo4jAdapter
-    elif db_type in ["tinkerpop", "gremlin-server"]:
+    elif db_type == "tinkerpop":
         # Use the TinkerPop adapter for Gremlin Server
         from graphsh.db.adapters.tinkerpop import TinkerPopAdapter
 

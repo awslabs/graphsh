@@ -37,4 +37,6 @@ def get_language_processor(language):
     elif language in ["cypher", "opencypher"]:
         return CypherProcessor()
     else:
-        raise ValueError(f"Unsupported language: {language}")
+        raise ValueError(
+            f"Unsupported language: {language}. Available: gremlin, sparql, cypher"
+        )

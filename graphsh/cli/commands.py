@@ -188,6 +188,11 @@ class CommandRegistry:
             return
 
         language = args[0].lower()
+        if language not in ("gremlin", "sparql", "cypher", "opencypher"):
+            console.print(
+                f"[bold red]Invalid language:[/bold red] '{args[0]}'. Available: gremlin, sparql, cypher"
+            )
+            return
         try:
             self.app.set_language(language)
         except ValueError as e:
@@ -312,6 +317,14 @@ class CommandRegistry:
                 )
                 return
 
+            valid_types = ("neptune", "neptune-analytics", "neo4j", "tinkerpop")
+            if connection_params["type"] not in valid_types:
+                console.print(
+                    f"[bold red]Invalid type:[/bold red] '{connection_params['type']}'. "
+                    f"Available: {', '.join(valid_types)}"
+                )
+                return
+
             # Connect using parameters
             if self.app.connect(**connection_params):
                 console.print("[bold green]Connected to database.[/bold green]")
@@ -398,6 +411,11 @@ class CommandRegistry:
             return
 
         format_type = args[0].lower()
+        if format_type not in ("table", "raw"):
+            console.print(
+                f"[bold red]Invalid format:[/bold red] '{args[0]}'. Available: table, raw"
+            )
+            return
         try:
             # Test if renderer exists
             from graphsh.renderers import get_renderer
