@@ -297,3 +297,16 @@ def test_neo4j_complex_query(neo4j_connection):
     assert "Bob" in output
     assert "David" in output
     assert "Charlie" in output
+
+
+def test_neo4j_connection_timeout():
+    """Test Neo4j adapter times out on unreachable endpoint."""
+    from graphsh.db.adapters.neo4j import Neo4jAdapter
+
+    adapter = Neo4jAdapter(
+        endpoint="bolt://192.0.2.1:7687",  # TEST-NET, non-routable
+        username="test",
+        password="test",
+    )
+    result = adapter.connect()
+    assert result is False

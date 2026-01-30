@@ -859,3 +859,16 @@ def test_neptune_cypher_error_handling(neptune_connection):
 
     # Verify error message is displayed
     assert "error" in output.lower() or "exception" in output.lower() or "400" in output
+
+
+def test_neptune_connection_timeout():
+    """Test Neptune adapter times out on unreachable endpoint."""
+    from graphsh.db.adapters.neptune import NeptuneAdapter
+
+    adapter = NeptuneAdapter(
+        endpoint="192.0.2.1",  # TEST-NET, non-routable
+        port=8182,
+        auth_type="none",
+    )
+    result = adapter.connect()
+    assert result is False

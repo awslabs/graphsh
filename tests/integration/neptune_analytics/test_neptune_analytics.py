@@ -37,3 +37,15 @@ def test_neptune_analytics_count(neptune_analytics_connection):
     else:
         cnt = result[0].get("cnt")
     assert cnt >= 0
+
+
+def test_neptune_analytics_connection_timeout():
+    """Test Neptune Analytics adapter times out on unreachable endpoint."""
+    from graphsh.db.adapters.neptune_analytics import NeptuneAnalyticsAdapter
+
+    adapter = NeptuneAnalyticsAdapter(
+        graph_id="g-0000000000",
+        region="us-east-1",
+    )
+    result = adapter.connect()
+    assert result is False

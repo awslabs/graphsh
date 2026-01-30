@@ -44,7 +44,7 @@ def test_init_without_valid_endpoint():
 def test_connect_success(mock_boto3_session):
     """Test successful connection."""
     mock_session, mock_client = mock_boto3_session
-    mock_client.get_graph.return_value = {"graphId": "g-12445"}
+    mock_client.list_queries.return_value = {"queries": []}
 
     adapter = NeptuneAnalyticsAdapter(
         endpoint="g-12445.us-east-1.neptune-graph.amazonaws.com"
@@ -54,10 +54,14 @@ def test_connect_success(mock_boto3_session):
 
     assert result is True
     mock_session.assert_called_once_with(region_name="us-east-1")
-    mock_session.return_value.client.assert_called_once_with(
-        "neptune-graph", region_name="us-east-1"
+    # Verify client was called with config containing connect_timeout
+    call_args = mock_session.return_value.client.call_args
+    assert call_args[0][0] == "neptune-graph"
+    assert call_args[1]["region_name"] == "us-east-1"
+    assert call_args[1]["config"].connect_timeout == 10
+    mock_client.list_queries.assert_called_once_with(
+        graphIdentifier="g-12445", maxResults=1, state="ALL"
     )
-    mock_client.get_graph.assert_called_once_with(graphIdentifier="g-12445")
 
 
 def test_connect_failure(mock_boto3_session):
@@ -65,9 +69,9 @@ def test_connect_failure(mock_boto3_session):
     mock_session, mock_client = mock_boto3_session
     from botocore.exceptions import ClientError
 
-    mock_client.get_graph.side_effect = ClientError(
+    mock_client.list_queries.side_effect = ClientError(
         {"Error": {"Code": "ResourceNotFoundException", "Message": "Graph not found"}},
-        "GetGraph",
+        "ListQueries",
     )
 
     adapter = NeptuneAnalyticsAdapter(
