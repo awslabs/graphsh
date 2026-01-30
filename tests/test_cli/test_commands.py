@@ -58,14 +58,19 @@ def test_cmd_language_with_args(command_registry, mock_app):
         mock_app.set_language.assert_called_once_with("sparql")
 
 
-def test_cmd_language_error(command_registry, mock_app):
-    """Test language command with error."""
-    mock_app.set_language.side_effect = ValueError("Invalid language")
+def test_cmd_language_opencypher(command_registry, mock_app):
+    """Test language command with opencypher alias."""
+    with patch("graphsh.cli.commands.console.print") as mock_print:
+        command_registry.cmd_language(["opencypher"])
+        mock_app.set_language.assert_called_once_with("opencypher")
 
+
+def test_cmd_language_error(command_registry, mock_app):
+    """Test language command with invalid language."""
     with patch("graphsh.cli.commands.console.print") as mock_print:
         command_registry.cmd_language(["invalid"])
         mock_print.assert_called_once_with(
-            "[bold red]Error:[/bold red] Invalid language"
+            "[bold red]Invalid language:[/bold red] 'invalid'. Available: gremlin, sparql, cypher"
         )
 
 
@@ -144,6 +149,18 @@ def test_cmd_connect_direct_missing_endpoint(command_registry):
         )
 
 
+def test_cmd_connect_invalid_type(command_registry):
+    """Test connect command with invalid database type."""
+    with patch("graphsh.cli.commands.console.print") as mock_print:
+        command_registry.cmd_connect(
+            ["--endpoint", "http://localhost", "--type", "invalid"]
+        )
+        mock_print.assert_any_call(
+            "[bold red]Invalid type:[/bold red] 'invalid'. "
+            "Available: neptune, neptune-analytics, neo4j, tinkerpop"
+        )
+
+
 def test_cmd_clear(command_registry):
     """Test clear command."""
     with patch("graphsh.cli.commands.os.system") as mock_system:
@@ -199,13 +216,7 @@ def test_cmd_format(command_registry, mock_app):
 
         # Test with invalid format
         mock_print.reset_mock()
-        with patch(
-            "graphsh.renderers.get_renderer",
-            side_effect=ValueError(
-                "Unsupported renderer type: invalid. Available renderers: table, raw, json, csv"
-            ),
-        ):
-            command_registry.cmd_format(["invalid"])
-            mock_print.assert_called_with(
-                "[bold red]Error:[/bold red] Unsupported renderer type: invalid. Available renderers: table, raw, json, csv"
-            )
+        command_registry.cmd_format(["invalid"])
+        mock_print.assert_called_with(
+            "[bold red]Invalid format:[/bold red] 'invalid'. Available: table, raw"
+        )

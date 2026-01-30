@@ -180,6 +180,8 @@ class GraphShApp:
         Raises:
             ValueError: If language is not supported.
         """
+        if language == "opencypher":
+            language = "cypher"
         try:
             # Check if we have an active connection and if the language is compatible
             if (
