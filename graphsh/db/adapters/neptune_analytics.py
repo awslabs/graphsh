@@ -10,6 +10,7 @@ import os
 from typing import Any, Dict, List
 
 import boto3
+from botocore.config import Config
 from botocore.exceptions import ClientError
 
 from graphsh.db.adapters.base import DatabaseAdapter
@@ -94,12 +95,17 @@ class NeptuneAnalyticsAdapter(DatabaseAdapter):
             else:
                 session = boto3.Session(region_name=self.region)
 
-            # Create neptune-graph client
-            self.client = session.client("neptune-graph", region_name=self.region)
+            # Create neptune-graph client with 10s connection timeout
+            config = Config(connect_timeout=10)
+            self.client = session.client(
+                "neptune-graph", region_name=self.region, config=config
+            )
 
-            # Test connection by describing the graph
+            # Test connection using data plane API (list_queries)
             try:
-                response = self.client.get_graph(graphIdentifier=self.graph_id)
+                self.client.list_queries(
+                    graphIdentifier=self.graph_id, maxResults=1, state="ALL"
+                )
                 logger.info(f"Connected to Neptune Analytics graph: {self.graph_id}")
                 return True
             except ClientError as e:

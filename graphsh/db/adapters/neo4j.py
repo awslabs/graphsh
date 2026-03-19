@@ -141,7 +141,9 @@ class Neo4jAdapter(DatabaseAdapter):
                 driver_options[key] = value
 
         try:
-            self.driver = GraphDatabase.driver(uri, auth=auth, **driver_options)
+            self.driver = GraphDatabase.driver(
+                uri, auth=auth, connection_timeout=10, **driver_options
+            )
             # Test connection
             with self.driver.session() as session:
                 session.run("RETURN 1")

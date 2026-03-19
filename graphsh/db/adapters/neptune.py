@@ -214,7 +214,7 @@ class NeptuneAdapter(DatabaseAdapter):
                 protocol = "https" if self.use_ssl else "http"
                 status_endpoint = f"{protocol}://{self.host}:{self.port}/status"
 
-                response = self.http_session.get(status_endpoint)
+                response = self.http_session.get(status_endpoint, timeout=10)
                 response.raise_for_status()
 
                 logger.info(f"Connected to Neptune at {self.host}:{self.port}")
